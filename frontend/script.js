@@ -17,7 +17,7 @@ document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
 
         if (response.ok) {
             localStorage.setItem('userId', data.userId);
-            localStorage.setItem('username', email);
+            localStorage.setItem('username', data.uname);
             window.location.href = 'home.html';
         } else {
             document.getElementById('loginMessage').innerText = data.message || 'Login failed';
@@ -41,7 +41,6 @@ document.getElementById('registerForm')?.addEventListener('submit', async (e) =>
             body: JSON.stringify({ username, email, password })
         });
         const data = await response.json();
-
         if (response.ok) {
             window.location.href = 'login.html';
         } else {
@@ -119,6 +118,7 @@ const uploadFile = async (caseId) => {
         formData.append('file', file);
 
         try {
+            console.log("Im gonna request file upload from server.js")
             const response = await fetch(`${caseApiUrl}/upload/${caseId}`, {
                 method: 'POST',
                 body: formData

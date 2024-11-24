@@ -1,0 +1,40 @@
+{
+    "participants": [
+        {
+            "name": "Alice"
+        },
+        {
+            "name": "Bob"
+        }
+    ],
+    "messages": [
+        {
+            "sender_name": "Alice",
+            "timestamp_ms": 1725174092296,
+            "content": "Did you finish the project?",
+            "is_geoblocked_for_viewer": false
+        },
+        {
+            "sender_name": "Bob",
+            "timestamp_ms": 1725174005075,
+            "content": "Yes, I submitted it yesterday.",
+            "is_geoblocked_for_viewer": false
+        },
+        {
+            "sender_name": "Alice",
+            "timestamp_ms": 1725173998258,
+            "content": "That's good. I\u2019ll review it later.",
+            "is_geoblocked_for_viewer": false
+        },
+        {
+            "sender_name": "Bob",
+            "timestamp_ms": 1725173982220,
+            "content": "Let me know if you need any changes.",
+            "is_geoblocked_for_viewer": false
+        }
+    ],
+    "title": "Alice",
+    "is_still_participant": true,
+    "thread_path": "inbox/alice_123456789",
+    "magic_words": []
+}
