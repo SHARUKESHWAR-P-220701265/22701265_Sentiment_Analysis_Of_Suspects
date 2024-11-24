@@ -1,0 +1,40 @@
+{
+    "participants": [
+        {
+            "name": "Eve"
+        },
+        {
+            "name": "Frank"
+        }
+    ],
+    "messages": [
+        {
+            "sender_name": "Eve",
+            "timestamp_ms": 1725174092296,
+            "content": "I can\u2019t stand being around you anymore.",
+            "is_geoblocked_for_viewer": false
+        },
+        {
+            "sender_name": "Frank",
+            "timestamp_ms": 1725174005075,
+            "content": "Oh, like I care what you think.",
+            "is_geoblocked_for_viewer": false
+        },
+        {
+            "sender_name": "Eve",
+            "timestamp_ms": 1725173998258,
+            "content": "You\u2019ve ruined everything you touch.",
+            "is_geoblocked_for_viewer": false
+        },
+        {
+            "sender_name": "Frank",
+            "timestamp_ms": 1725173982220,
+            "content": "At least I don\u2019t pretend to be perfect like you.",
+            "is_geoblocked_for_viewer": false
+        }
+    ],
+    "title": "Eve",
+    "is_still_participant": true,
+    "thread_path": "inbox/eve_1112131415",
+    "magic_words": []
+}

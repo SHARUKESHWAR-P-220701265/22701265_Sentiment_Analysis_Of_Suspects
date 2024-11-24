@@ -1,0 +1,40 @@
+{
+    "participants": [
+        {
+            "name": "Charlie"
+        },
+        {
+            "name": "Dana"
+        }
+    ],
+    "messages": [
+        {
+            "sender_name": "Dana",
+            "timestamp_ms": 1725174092296,
+            "content": "Sure, go ahead and ignore me again. Totally won't come after you.",
+            "is_geoblocked_for_viewer": false
+        },
+        {
+            "sender_name": "Charlie",
+            "timestamp_ms": 1725174005075,
+            "content": "Haha, like I\u2019d even try to escape from your wrath.",
+            "is_geoblocked_for_viewer": false
+        },
+        {
+            "sender_name": "Dana",
+            "timestamp_ms": 1725173998258,
+            "content": "Oh, don't worry. I\u2019ll just casually plot your demise over coffee.",
+            "is_geoblocked_for_viewer": false
+        },
+        {
+            "sender_name": "Charlie",
+            "timestamp_ms": 1725173982220,
+            "content": "Sounds delightful. I\u2019ll bring snacks for the brainstorming session.",
+            "is_geoblocked_for_viewer": false
+        }
+    ],
+    "title": "Charlie",
+    "is_still_participant": true,
+    "thread_path": "inbox/charlie_987654321",
+    "magic_words": []
+}

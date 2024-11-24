@@ -1,0 +1,40 @@
+{
+    "participants": [
+        {
+            "name": "Grace"
+        },
+        {
+            "name": "Hank"
+        }
+    ],
+    "messages": [
+        {
+            "sender_name": "Grace",
+            "timestamp_ms": 1725174092296,
+            "content": "I saw the clouds today, they were speaking to me.",
+            "is_geoblocked_for_viewer": false
+        },
+        {
+            "sender_name": "Hank",
+            "timestamp_ms": 1725174005075,
+            "content": "Did they have anything important to say? Or was it just fluff?",
+            "is_geoblocked_for_viewer": false
+        },
+        {
+            "sender_name": "Grace",
+            "timestamp_ms": 1725173998258,
+            "content": "I love you so much Hank",
+            "is_geoblocked_for_viewer": false
+        },
+        {
+            "sender_name": "Hank",
+            "timestamp_ms": 1725173982220,
+            "content": "I love you so much baby",
+            "is_geoblocked_for_viewer": false
+        }
+    ],
+    "title": "Grace",
+    "is_still_participant": true,
+    "thread_path": "inbox/grace_2021222324",
+    "magic_words": []
+}

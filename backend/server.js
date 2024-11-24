@@ -6,7 +6,7 @@ const User = require('./models/User');
 const Case = require('./models/Case');
 const multer = require('multer');
 const fs = require('fs');
-
+const path = require('path');
 const app = express();
 const PORT = 5000;
 
@@ -18,7 +18,8 @@ mongoose.connect('mongodb://localhost:27017/simpleApp', { useNewUrlParser: true,
     .catch(err => console.log(err));
 
 // Multer setup for handling file uploads
-const upload = multer({ dest: 'uploads/' });
+
+const upload = multer({dest : "uploads/"});
 
 app.post('/api/users/register', async (req, res) => {
     const { username, email, password } = req.body;
@@ -37,8 +38,8 @@ app.post('/api/users/login', async (req, res) => {
     
     try {
         const user = await User.findOne({ email, password });
-        if (!user) return res.status(401).json({ message: 'Invalid credentials' });
-        res.status(200).json({ message: 'Login successful!', userId: user._id });
+        if (!user) return res.status(401).json({ message: 'User does not exist. Register Now.' });
+        res.status(200).json({ message: 'Login successful!', userId: user._id, uname: user.username});
     } catch (error) {
         res.status(500).json({ message: 'Error logging in', error });
     }
@@ -60,10 +61,16 @@ app.post('/api/cases', async (req, res) => {
 // File upload route
 app.post('/api/cases/upload/:caseId', upload.single('file'), (req, res) => {
     const caseId = req.params.caseId;
-    const filePath = req.file.path;
-
+    const file = req.file;
+    // Log the file details to ensure it's uploaded
+    console.log('File uploaded:', file);
+    if (!file) {
+        return res.status(400).json({ message: 'No file uploaded' });
+    }
+    const filePath = path.resolve(file.path).replace(/\\/g, '\\\\'); // Get the file path from Multer’s storage location
+    console.log('File path:', filePath);
     // Read the JSON file
-    fs.readFile(filePath, 'utf8', async (err, data) => {
+    fs.readFile(filePath.replace(/\\\\/g, '\\'), 'utf8', async (err, data) => {
         if (err) {
             return res.status(500).json({ message: 'Error reading file', error: err });
         }
@@ -78,11 +85,6 @@ app.post('/api/cases/upload/:caseId', upload.single('file'), (req, res) => {
             res.status(200).json({ message: 'File uploaded successfully', participants });
         } catch (error) {
             res.status(400).json({ message: 'Error processing JSON', error });
-        } finally {
-            // Clean up the uploaded file
-            fs.unlink(filePath, (err) => {
-                if (err) console.error('Error deleting file:', err);
-            });
         }
     });
 });
@@ -92,16 +94,42 @@ app.post('/api/cases/analyze/:caseId', async (req, res) => {
     const caseId = req.params.caseId;
     const { participant } = req.body;
 
-    // Here, implement the call to your ML model
-    // For the sake of demonstration, let's return a mock threat score and summary
-    const mockThreatScore = 8.986; // Mock score
-    const mockSummary = `Analysis for ${participant} - Highly suspicious with very negative and harmful intentions.`; // Mock summary
-
     try {
-        const analysisResult = { threatScore: mockThreatScore, summary: mockSummary };
-        res.status(200).json(analysisResult);
+        // Find the case to get the file path
+        const caseData = await Case.findById(caseId);
+        if (!caseData || !caseData.jsonFile) {
+            return res.status(404).json({ message: 'Case or JSON file not found' });
+        }
+
+        const filePath = caseData.jsonFile; // Path to the uploaded JSON file
+
+        // Call the Flask API using fetch
+        const response = await fetch('http://localhost:5001/analyze', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                file_path: filePath,
+                participant_name: participant,
+            }),
+        });
+
+        if (!response.ok) {
+            return res.status(response.status).json({ message: 'Error analyzing conversation', error: await response.text() });
+        }
+
+        const analysisResult = await response.json();
+        const { threatScore, summary } = analysisResult;
+
+        // Update the case with the analysis results
+        await Case.findByIdAndUpdate(caseId, { threatScore, summary }, { new: true });
+
+        res.status(200).json({ threatScore, summary });
+
     } catch (error) {
-        res.status(500).json({ message: 'Error analyzing case', error });
+        console.error('Error in analysis route:', error);
+        res.status(500).json({ message: 'Error analyzing conversation', error });
     }
 });
 
